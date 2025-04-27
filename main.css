@@ -167,6 +167,12 @@ hr {
 .move-name {
 	margin: 0;
 }
+.move-name > a {
+	color: var(--text);
+}
+.username {
+	color: var(--text);
+}
 .review-score {
 	color: transparent;
 	text-shadow: 0 0 0 var(--accent);
