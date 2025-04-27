@@ -1,0 +1,75 @@
+:root {
+	--text: #fff;
+	--background: #1b1c1d;
+	--box-background: #1d1f27;
+	--accent: #586eb8;
+	--background-accent: #333152;
+	font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+body {
+	background-color: var(--background);
+	color: var(--text);
+	margin: 0;
+}
+a {
+	color: var(--accent);
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+#header {
+	vertical-align: middle;
+	border-bottom: 1px solid var(--background-accent);
+	padding: 1em;
+	align-content: center;
+	height: 3em;
+}
+#header > * {
+	display: inline-block;
+}
+#header-buttons {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+}
+#header-buttons > li {
+	display: inline-block;
+}
+#header-buttons > li > a {
+	display: inline-block;
+	background-color: var(--box-background);
+	height: 1.5em;
+	padding: 0.5em 2em;
+	align-content: center;
+}
+#header-branding {
+	all: unset;
+	cursor: pointer;
+	margin: 0 2em;
+	color: var(--text);
+}
+#header-branding > * {
+	display: inline-block;
+}
+#header-branding > img {
+	width: 2em;
+	height: 2em;
+	vertical-align: middle;
+}
+#header-branding > h3 {
+	margin: 0;
+}
+#account {
+	display: block;
+	float: right;
+	height: 100%;
+	height: 1.5em;
+	padding: 0.5em;
+}
+#account > a > img {
+	vertical-align: middle;
+	width: 1.5em;
+	height: 1.5em;
+}
