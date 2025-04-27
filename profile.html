@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>My Movie Reviews</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+<body>
+    <header id="header">
+        <a href="index.html" id="header-branding">
+            <img alt="logo" />
+            <h3>Sitename</h3>
+        </a>
+        <ul id="header-buttons">
+            <li><a href="#">Films</a></li>
+            <li><a href="#">Lists</a></li>
+            <li><a href="#">Members</a></li>
+            <li><a href="#">My account</a></li>
+        </ul>
+        <div id="header-right">
+            <span id="search">
+                <input type="search" id="search-input" />
+                <button id="search-button">
+                    <img alt="search button" src="images/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" />
+                </button>
+            </span>
+        </div>
+    </header>
+
+    <main id="content">
+        <!-- Profile Section -->
+        <section id="profile-section" style="text-align: center; margin-bottom: 2em;">
+            <img src="path/to/profile-picture.jpg" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%;" />
+            <h3 class="username">Username</h3>
+            <p class="bio" style="font-size: 1.1em; color: var(--text); max-width: 800px; margin: 0 auto;">Hello, I love watching and reviewing movies! My favorite genres include action, sci-fi, and drama. I'm passionate about films with deep plots and strong character development.</p>
+        </section>
+
+        <!-- Bar Graph Placeholder (Review Distribution) -->
+        <section id="review-distribution" style="text-align: center; margin-bottom: 2em;">
+            <h4>Review Distribution</h4>
+            <img src="path/to/bar-graph-placeholder.png" alt="Review Distribution Bar Graph" style="width: 80%; max-width: 600px; height: auto;"/>
+        </section>
+
+        <!-- Movie Reviews Section -->
+        <section id="all-reviews">
+            <h5>Recent Reviews</h5>
+            <div class="review-list">
+                <!-- Movie Reviews List (Loop or Dynamic Data) -->
+                <div class="review">
+                    <h5 class="movie-name">The Matrix</h5>
+                    <div class="review-score">4.5⭐</div>
+                    <p class="review-text">
+                        A mind-bending journey into a simulated reality, with incredible action scenes and philosophical depth.
+                    </p>
+                </div>
+
+                <div class="review">
+                    <h5 class="movie-name">Parasite</h5>
+                    <div class="review-score">5⭐</div>
+                    <p class="review-text">
+                        A brilliant social commentary with exceptional performances and a twist that leaves you speechless.
+                    </p>
+                </div>
+
+                <!-- More reviews here... -->
+            </div>
+        </section>
+
+        <section id="top-10-reviews">
+            <h5>Top 10 Highest Rated Movies</h5>
+            <div class="top-10-list">
+                <!-- Top 10 Highest Rated Movies -->
+                <div class="top-10-item">
+                    <h5 class="movie-name">Parasite</h5>
+                    <div class="review-score">5⭐</div>
+                    <p class="review-text">A brilliant social commentary with exceptional performances...</p>
+                </div>
+
+                <div class="top-10-item">
+                    <h5 class="movie-name">The Dark Knight</h5>
+                    <div class="review-score">4.5⭐</div>
+                    <p class="review-text">A gripping, dark take on the Batman saga...</p>
+                </div>
+
+                <div class="top-10-item">
+                    <h5 class="movie-name">The Matrix</h5>
+                    <div class="review-score">4.5⭐</div>
+                    <p class="review-text">A mind-bending journey into a simulated reality...</p>
+                </div>
+
+                <!-- More top 10 movies here... -->
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer">
+        (c) 2025 Sitename <br /><a href="#">About</a> | <a href="#">Contact</a>
+    </footer>
+</body>
+</html>
