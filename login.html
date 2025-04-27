@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Sitename - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <style>
+        /* Additional layout for the login page */
+        .login-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .banner {
+            width: 100%;
+            height: auto;
+        }
+        .login-section {
+            display: flex;
+            margin-top: 2em;
+            background-color: var(--box-background);
+            border-radius: 8px;
+            padding: 2em;
+            max-width: 800px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-image {
+            flex: 1;
+            text-align: center;
+        }
+        .login-image img {
+            width: 200px;
+            border-radius: 8px;
+        }
+        .login-form {
+            flex: 1;
+            padding-left: 2em;
+        }
+        .login-form form {
+            display: flex;
+            flex-direction: column;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            background-color: var(--background);
+            color: var(--text);
+            border: 1px solid var(--background-accent);
+            padding: 0.5em;
+            border-radius: 5px;
+            margin-top: 0.5em;
+            margin-bottom: 1em;
+        }
+        .login-form button {
+            background-color: var(--accent);
+            color: var(--text);
+            padding: 0.5em 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <a href="#" id="header-branding">
+            <img alt="logo" />
+            <h3>Sitename</h3>
+        </a>
+        <ul id="header-buttons">
+            <li><a href="#">Films</a></li>
+            <li><a href="#">Lists</a></li>
+            <li><a href="#">Members</a></li>
+            <li><a href="create_account.html">Create account</a></li>
+        </ul>
+        <div id="header-right">
+            <span id="account">
+                <a href="#"><img alt="account-image" src="images/person_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" />Login</a>
+            </span>
+        </div>
+    </header>
+
+    <main id="content" class="login-page">
+        <!-- Banner image at the top -->
+        <img src="images/login_banner.png" alt="Login Banner" class="banner" />
+
+        <!-- Login section containing image and form -->
+        <div class="login-section">
+            <!-- Left side: placeholder movie image -->
+            <div class="login-image">
+                <img src="images/placeholder_movie_banner2.png" alt="Login Movie Banner" />
+            </div>
+
+            <!-- Right side: login form -->
+            <div class="login-form">
+                <h4 class="section-header">Login to Your Account</h4>
+                <form action="#" method="post">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required />
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required />
+
+                    <button type="submit">Login</button>
+                </form>
+                <p style="margin-top: 1em;">Don't have an account? <a href="create_account.html">Create one</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        (c) 2025 Sitename <br/>
+        <a href="#">About</a> | <a href="#">Contact</a>
+    </footer>
+</body>
+</html>
