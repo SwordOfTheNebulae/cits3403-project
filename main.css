@@ -2,7 +2,7 @@
 	--text: #fff;
 	--background: #1b1c1d;
 	--box-background: #1d1f27;
-	--accent: #586eb8;
+	--accent: #a4b3e4;
 	--background-accent: #333152;
 	font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
@@ -36,6 +36,7 @@ a:hover {
 }
 #header-buttons > li {
 	display: inline-block;
+	margin: 0 0.1em;
 }
 #header-buttons > li > a {
 	display: inline-block;
@@ -62,8 +63,7 @@ a:hover {
 	margin: 0;
 }
 #account {
-	display: block;
-	float: right;
+	vertical-align: middle;
 	height: 100%;
 	height: 1.5em;
 	padding: 0.5em;
@@ -72,4 +72,26 @@ a:hover {
 	vertical-align: middle;
 	width: 1.5em;
 	height: 1.5em;
+}
+#header-right {
+	float: right;
+	vertical-align: middle;
+}
+#search {
+	vertical-align: middle;
+	background-color: var(--box-background);
+	margin: auto;
+}
+#search-input {
+	all: inherit;
+	cursor: auto;
+	padding: 0.2em;
+}
+#search-button {
+	all: inherit;
+	cursor: pointer;
+	color: var(--accent);
+}
+#search-button > img {
+	vertical-align: middle;
 }
