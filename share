@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Sitename - Share</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+<body>
+    <header id="header">
+        <a href="#" id="header-branding">
+            <img alt="logo" />
+            <h3>Sitename</h3>
+        </a>
+        <ul id="header-buttons">
+            <li><a href="#">Films</a></li>
+            <li><a href="#">Lists</a></li>
+            <li><a href="#">Members</a></li>
+            <li><a href="#">Create account</a></li>
+        </ul>
+        <div id="header-right">
+            <span id="search">
+                <input type="search" id="search-input" />
+                <button id="search-button">
+                    <img alt="search button" src="images/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" />
+                </button>
+            </span>
+            <span id="account">
+                <a href="#"><img alt="account-image" src="images/person_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" />Login</a>
+            </span>
+        </div>
+    </header>
+
+    <main id="content">
+        <h4 class="section-header"><a href="#">Share Your Recommendations</a></h4>
+        <div class="share-container">
+            <p>Generate a link to share your personalized movie recommendations with friends!</p>
+            <div class="generate-link">
+                <button id="generate-link-button">Generate Shareable Link</button>
+                <input type="text" id="share-link" readonly placeholder="Your link will appear here..." />
+            </div>
+
+            <h4 class="section-header" style="margin-top: 40px;"><a href="#">Discover Friends' Recommendations</a></h4>
+            <p>Enter a shared link from a friend to explore their favorite movies:</p>
+            <div class="discover-link">
+                <input type="text" id="friend-link-input" placeholder="Enter shared link..." />
+                <button id="view-friend-recommendations-button">View Recommendations</button>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        (c) 2025 Sitename <br />
+        <a href="#">About</a> | <a href="#">Contact</a>
+    </footer>
+
+    <script>
+        document.getElementById("generate-link-button").addEventListener("click", function() {
+            // This is a placeholder for actual link generation logic
+            const fakeLink = "https://sitename.com/recommendations?user=12345";
+            document.getElementById("share-link").value = fakeLink;
+        });
+
+        document.getElementById("view-friend-recommendations-button").addEventListener("click", function() {
+            const inputLink = document.getElementById("friend-link-input").value;
+            if (inputLink.trim() !== "") {
+                window.location.href = inputLink;
+            }
+        });
+    </script>
+</body>
+</html>
