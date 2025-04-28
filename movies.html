@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Sitename - Movie Detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <style>
+        /* Additional layout for movie detail page */
+        .movie-detail-container {
+            display: flex;
+            flex-direction: row;
+            gap: 2em;
+            margin-top: 2em;
+            background-color: var(--box-background);
+            padding: 2em;
+            border-radius: 8px;
+        }
+        .movie-poster {
+            width: 300px;
+            border-radius: 8px;
+        }
+        .movie-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .movie-info h2 {
+            margin-top: 0;
+        }
+        .movie-info p {
+            line-height: 1.5em;
+        }
+        .review-section {
+            margin-top: 3em;
+            background-color: var(--box-background);
+            padding: 2em;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <a href="#" id="header-branding">
+            <img alt="logo" />
+            <h3>Sitename</h3>
+        </a>
+        <ul id="header-buttons">
+            <li><a href="#">Films</a></li>
+            <li><a href="#">Lists</a></li>
+            <li><a href="#">Members</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+        <div id="header-right">
+            <span id="account">
+                <a href="#"><img alt="account-image" src="images/person_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" />Login</a>
+            </span>
+        </div>
+    </header>
+
+    <main id="content">
+        <!-- Movie Detail Section -->
+        <div class="movie-detail-container">
+            <!-- Left: Movie Poster -->
+            <div class="poster-area">
+                <img src="images/placeholder_movie_banner.png" alt="Movie Poster" class="movie-poster" />
+            </div>
+
+            <!-- Right: Movie Information -->
+            <div class="movie-info">
+                <h2>Placeholder Movie Title (2025)</h2>
+                <p><strong>Director:</strong> Jane Doe</p>
+                <p><strong>Cast:</strong> Actor A, Actor B, Actor C</p>
+                <p><strong>Genre:</strong> Action, Drama</p>
+                <p><strong>Duration:</strong> 2h 15min</p>
+                <p><strong>Synopsis:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+        </div>
+
+        <!-- Review Section -->
+        <div class="review-section">
+            <h4 class="section-header">User Reviews</h4>
+            <ul class="reviews">
+                <li class="review">
+                    <img class="movie-banner-small" alt="User icon" src="images/placeholder_movie_banner2.png" />
+                    <div class="review-content">
+                        <h4 class="move-name">John Smith</h4><span class="review-score">⭐⭐⭐⭐</span>
+                        <p>Great story and strong performances. Highly recommended!</p>
+                    </div>
+                </li>
+                <li class="review">
+                    <img class="movie-banner-small" alt="User icon" src="images/placeholder_movie_banner3.png" />
+                    <div class="review-content">
+                        <h4 class="move-name">Emma Johnson</h4><span class="review-score">⭐⭐⭐½</span>
+                        <p>Good movie, but a bit slow in the middle. Visuals were amazing though!</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <footer id="footer">
+        (c) 2025 Sitename <br/>
+        <a href="#">About</a> | <a href="#">Contact</a>
+    </footer>
+</body>
+</html>
