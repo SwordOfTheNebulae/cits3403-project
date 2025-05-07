@@ -3,7 +3,7 @@ from flask import render_template
 
 @app.route("/")
 def home():
-    return render_template("not_logged_in.html", title="Sitename", account_name="Login", account_page="/login")
+    return render_template("not_logged_in.html", title="Sitename", account={"username": "john"})
 
 @app.route("/movies")
 def movies():
@@ -19,4 +19,12 @@ def data():
 
 @app.route("/about")
 def about():
+    return "comming soon"
+
+@app.route("/profile")
+def profile(username):
+    return "comming soon"
+
+@app.route("/login")
+def login():
     return "comming soon"

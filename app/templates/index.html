@@ -14,9 +14,19 @@
 				<a href="{{url_for('movies')}}">Movies</a>
 				<a href="{{url_for('reviews')}}">Reviews</a>
 				<a href="{{url_for('data')}}">Visualise</a>
-				<span class="right_align"
-					><a href="{{account_page}}"><img alt="user icon" />{{account_name}}</a></span
-				>
+
+				<span class="right_align">
+					{% if account %}
+					<a href="{{url_for('profile', username=account.username)}}"
+						><img
+							alt="user icon"
+							src="{{url_for('static', filename='images/person_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg')}}"
+						/>{{account.username}}</a
+					>
+					{% else %}
+					<a href="{{url_for('login')}}"><img alt="user icon" />Login</a>
+					{% endif %}
+				</span>
 			</nav>
 		</header>
 		{% block body %}
@@ -24,7 +34,7 @@
 		{% endblock %}
 		<footer>
 			(c) sitename 2025 <br />
-			<a href="{{url_for('about')}}">About us</a> <a href="https://twitter.com/non-existant-twitter-account-for-our-size">Twitter</a>
+			<a href="{{url_for('about')}}">About us</a> <a href="https://twitter.com/non-existant-twitter-account-for-our-site">Twitter</a>
 		</footer>
 	</body>
 </html>
