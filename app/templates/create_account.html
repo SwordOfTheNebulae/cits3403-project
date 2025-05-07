@@ -9,6 +9,7 @@
 	<p>{{ form.email.label }} {{ form.email(size=32) }}</p>
 	<p>{{ form.password.label }} {{ form.password(size=32) }}</p>
 	<p>{{ form.confirm_password.label }} {{ form.confirm_password(size=32) }}</p>
+	<p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
 	<p>{{ form.submit() }}</p>
 </form>
 Already have an account? <a href="{{url_for('login')}}">Click here to login</a>

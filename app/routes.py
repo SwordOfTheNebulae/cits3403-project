@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template
+from flask import render_template, flash, redirect
 import app.forms as forms
 
 @app.route("/")
@@ -26,12 +26,20 @@ def about():
 def profile(username):
     return "comming soon"
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form = forms.LoginForm()
+    if form.validate_on_submit():
+        # message for testing
+        flash('Login requested for user {}, remember_me={}'.format(form.username.data, form.remember_me.data))
+        return redirect('/')
     return render_template("login.html", title="Login - Sitename", form=form)
 
-@app.route("/create_account")
+@app.route("/create_account", methods=["GET", "POST"])
 def create_account():
     form = forms.CreateAccountForm()
+    if form.validate_on_submit():
+        # message for testing
+        flash('Create account requested for user {}, remember_me={}'.format(form.username.data, form.remember_me.data))
+        return redirect('/')
     return render_template("create_account.html", title="Create Account - Sitename", form=form)

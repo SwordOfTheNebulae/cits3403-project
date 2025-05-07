@@ -31,7 +31,13 @@
 		</header>
 		{% block body %}
 		<!--  -->
-		{% endblock %}
+		{% endblock %} {% with messages = get_flashed_messages() %} {% if messages %}
+		<ul>
+			{% for message in messages %}
+			<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %} {% endwith %}
 		<footer>
 			(c) sitename 2025 <br />
 			<a href="{{url_for('about')}}">About us</a> <a href="https://twitter.com/non-existant-twitter-account-for-our-site">Twitter</a>
