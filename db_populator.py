@@ -1,8 +1,7 @@
 import csv
-from app import db
+from app import app, db
 from app.models import Movie
 
-# pop db based on films.csv (in the data dir.)
 def populate_movies():
     with open("films.csv", mode="r", encoding="utf-8") as file:
         reader = csv.DictReader(file)
@@ -17,5 +16,6 @@ def populate_movies():
         db.session.commit()
 
 if __name__ == "__main__":
-    populate_movies()
-    print("Movies populated successfully!")
+    with app.app_context():
+        populate_movies()
+        print("Movies populated successfully!")
