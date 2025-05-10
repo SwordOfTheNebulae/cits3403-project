@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+<!--  -->
+{% block body %}
+<h2>All Movies</h2>
+
+<form method="get" action="{{ url_for('movies') }}">
+	<label for="sort">Sort by:</label>
+	<select name="sort" id="sort" onchange="this.form.submit()">
+		<option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name (A-Z)</option>
+		<option value="rating_desc" {% if sort_by == 'rating_desc' %}selected{% endif %}>Rating (High → Low)</option>
+		<option value="rating_asc" {% if sort_by == 'rating_asc' %}selected{% endif %}>Rating (Low → High)</option>
+		<option value="genre" {% if sort_by == 'genre' %}selected{% endif %}>Genre (A-Z)</option>
+	</select>
+</form>
+
+<ul>
+	{% for movie in movies %}
+	<li>
+		<strong><a href="{{ url_for('movie_page', movie_id=movie.id) }}">{{ movie.title }}</a></strong><br />
+		Genre: {{ movie.genre }}<br />
+		Year: {{ movie.year }}<br />
+		Average Rating: {{ movie.avg_rating }}
+	</li>
+	<hr />
+	{% endfor %}
+</ul>
+{% endblock %}
