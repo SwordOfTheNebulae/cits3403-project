@@ -22,7 +22,7 @@
 	{% for movie in movies %}
 	<li>
 		<strong><a href="{{ url_for('movie_page', movie_id=movie.id) }}">{{ movie.title }}</a></strong><br />
-		Genre: {{ movie.genre }}<br />
+		Genres: {{ movie.genres }}<br />
 		Year: {{ movie.year }}<br />
 		Average Rating: {{ movie.avg_rating }}
 	</li>
@@ -30,4 +30,3 @@
 	{% endfor %}
 </ul>
 {% endblock %}
-

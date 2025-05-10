@@ -71,15 +71,15 @@ def submit_review(movie_id):
 
 @app.route("/reviews")
 def reviews():
-    return "comming soon"
+    return "coming soon"
 
 @app.route("/visualize")
 def data():
-    return "comming soon"
+    return "coming soon"
 
 @app.route("/about")
 def about():
-    return "comming soon"
+    return "coming soon"
 
 @login_required
 @app.route("/profile/<username>")

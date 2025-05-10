@@ -30,8 +30,8 @@ class Movie(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(sa.String(128), index=True, unique=True)
     genre: Mapped[str] = mapped_column(sa.String(64))
-    year: Mapped[int] = mapped_column()
     avg_rating: Mapped[float] = mapped_column(sa.Float)  # 0.0 to 10.0
+    release_year: Mapped[int] = mapped_column()
 
     reviews = relationship("Review", back_populates="movie")
 
