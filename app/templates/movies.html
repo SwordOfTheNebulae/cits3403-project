@@ -1,9 +1,12 @@
 {% extends 'index.html' %}
-<!--  -->
+
 {% block body %}
 <h2>All Movies</h2>
 
 <form method="get" action="{{ url_for('movies') }}">
+	<label for="search">Search:</label>
+	<input type="text" id="search" name="search" value="{{ request.args.get('search', '') }}" placeholder="Search by title..." />
+
 	<label for="sort">Sort by:</label>
 	<select name="sort" id="sort" onchange="this.form.submit()">
 		<option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name (A-Z)</option>
@@ -11,6 +14,8 @@
 		<option value="rating_asc" {% if sort_by == 'rating_asc' %}selected{% endif %}>Rating (Low → High)</option>
 		<option value="genre" {% if sort_by == 'genre' %}selected{% endif %}>Genre (A-Z)</option>
 	</select>
+
+	<button type="submit">Apply</button>
 </form>
 
 <ul>
@@ -25,3 +30,4 @@
 	{% endfor %}
 </ul>
 {% endblock %}
+
