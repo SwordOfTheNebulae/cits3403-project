@@ -1,4 +1,4 @@
-id,title,genres,averageRating,releaseYear
+id,title,genre,avg_rating,release_year
 1,The Shawshank Redemption,Drama,9.3,1994
 2,The Godfather,"Crime, Drama",9.2,1972
 3,The Chaos Class,Comedy,9.2,1975
