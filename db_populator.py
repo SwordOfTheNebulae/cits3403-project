@@ -8,9 +8,9 @@ def populate_movies():
         for row in reader:
             movie = Movie(
                 title=row["title"],
-                genre=row["genres"],
-                avg_rating=float(row["averageRating"]),
-                release_year=int(row["releaseYear"])
+                genre=row["genre"],
+                avg_rating=float(row["avg_rating"]),
+                release_year=int(row["release_year"])
             )
             db.session.add(movie)
         db.session.commit()
