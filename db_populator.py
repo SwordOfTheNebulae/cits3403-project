@@ -3,7 +3,7 @@ from app import app, db
 from app.models import Movie
 
 def populate_movies():
-    with open("films.csv", mode="r", encoding="utf-8") as file:
+    with open("data/films.csv", mode="r", encoding="utf-8") as file:
         reader = csv.DictReader(file)
         for row in reader:
             movie = Movie(
