@@ -1,0 +1,25 @@
+{% extends "user/base_show.html" %}
+{% block personal %}
+    <div class="col-lg-9">
+        <div class="video-details">
+            <div class="change-pswd">
+                <h2 class="hd-op">Personal Information</h2>
+                <form action="{% url 'personal' %}" method='post' autocomplete="on">
+                     {% csrf_token %}
+                    {% for field in form %}
+                    <div class="ch-pswd">
+                       {{ field.label_tag }}
+                        {{ field.errors }}
+                        {{ field }}
+                    </div><!--ch-pswd end-->
+                    {% endfor %}
+
+                    <div class="ch-pswd">
+                        <button type="reset">Reset</button>
+                        <button type="submit">Update Information</button>
+                    </div><!--ch-pswd end-->
+                </form>
+            </div><!--change-pswd end-->
+        </div><!--video-details end-->
+    </div>
+{% endblock %}

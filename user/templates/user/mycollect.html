@@ -1,0 +1,41 @@
+{% extends "user/base_show.html" %}
+{% block personal %}
+    <div class="col-lg-9">
+        <div class="video-details">
+            <div class="latest_vidz">
+                <div class="latest-vid-option">
+                    <h2 class="hd-op">My Collection</h2>
+                    <div class="clearfix"></div>
+                </div><!--latest-vid-option end-->
+                <div class="vidz_list">
+                    <table width="800" border="0" style="table-layout: fixed">
+
+                        <tr align="center">
+                            <td align="center">Movie Name</td>
+                            <td align="center">Tags</td>
+                            <td align="center">Director</td>
+                            <td align="center">View</td>
+                        </tr>
+                        {% for i in item %}
+                        <tr align="center">
+                            <td align="center">{{ i.name }}</td>
+                            <td align="center">{% if i.tags.all %}
+                                {% for tag in i.tags.all %}
+                                    {{ tag }}
+                                {% endfor %}
+                            {% else %}
+                                None
+                            {% endif %}</td>
+                            <td align="center">{{ i.director }}</td>
+                            <td align="center">
+                                <a href="{% url 'movie' i.id %}"><button>View</button></a>
+                            </td>
+                        {% endfor %}
+                        </tr>
+
+                    </table>
+                </div><!--vidz_list end-->
+            </div><!--latest_vidz end-->
+        </div><!--video-details end-->
+    </div>
+{% endblock %}

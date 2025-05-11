@@ -1,0 +1,35 @@
+{% extends "user/base_show.html" %}
+{% block personal %}
+<div class="col-lg-9">
+    <div class="video-details">
+        <div class="latest_vidz">
+            <div class="latest-vid-option">
+                <h2 class="hd-op">My Comments</h2>
+                <div class="clearfix"></div>
+            </div><!--latest-vid-option end-->
+            <div class="vidz_list">
+                <table width="800" border="0" style="table-layout: fixed">
+
+                    <tr align="center">
+                        <td align="center">Movie Name</td>
+                        <td align="center">Comment Content</td>
+                        <td align="center">Comment Time</td>
+                        <td align="center">Delete</td>
+                    </tr>
+                    {% for i in item %}
+                    <tr align="center">
+                        <td align="center">{{ i.movie }}</td>
+                        <td align="center">{{ i.content }}</td>
+                        <td align="center">{{ i.create_time }}</td>
+                        <td align="center">
+                             <button><a href="{% url 'delete_comment' i.id %}">Delete</a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div><!--vidz_list end-->
+        </div><!--latest_vidz end-->
+    </div><!--video-details end-->
+</div>
+{% endblock %}
