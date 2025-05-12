@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import Optional
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import UniqueConstraint
 import sqlalchemy as sa
 from app import db, login
 
@@ -28,10 +29,11 @@ def load_user(id):
 
 class Movie(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str] = mapped_column(sa.String(128), index=True, unique=True)
-    genre: Mapped[str] = mapped_column(sa.String(64))
-    avg_rating: Mapped[float] = mapped_column(sa.Float)  # 0.0 to 10.0
-    release_year: Mapped[int] = mapped_column()
+    title: Mapped[str] = mapped_column(sa.String(128), index=True, nullable=False)
+    genre: Mapped[str] = mapped_column(sa.String(64), nullable=True)
+    avg_rating: Mapped[float] = mapped_column(sa.Float, nullable=True)  # 0.0 to 10.0
+    release_year: Mapped[int] = mapped_column(nullable=False)
+    __table_args__ = (UniqueConstraint("title", "release_year", name="unique movie title and year"),) # title and year are unique together
 
     reviews = relationship("Review", back_populates="movie")
 
