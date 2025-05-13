@@ -2,9 +2,18 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import Optional
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import UniqueConstraint
+from sqlalchemy import UniqueConstraint, Table, Column
 import sqlalchemy as sa
 from app import db, login
+import datetime
+
+Friend = Table(
+    "friend",
+    db.Model.metadata,
+    Column("account_a", sa.ForeignKey("user.id")),
+    Column("account_b", sa.ForeignKey("user.id")),
+    Column("friends_since", sa.Date())
+)
 
 class User(UserMixin, db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -13,6 +22,7 @@ class User(UserMixin, db.Model):
     password_hash: Mapped[Optional[str]] = mapped_column(sa.String(256))
 
     reviews = relationship("Review", back_populates="user")
+    friends = relationship("User", secondary=Friend, primaryjoin=Friend.c.account_a==id, secondaryjoin=Friend.c.account_b==id)
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -26,6 +36,12 @@ class User(UserMixin, db.Model):
 @login.user_loader
 def load_user(id):
     return db.session.get(User, int(id))
+
+class FriendRequest(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    account_to: Mapped[int] = mapped_column(sa.ForeignKey("user.id"))
+    account_from: Mapped[int] = mapped_column(sa.ForeignKey("user.id"))
+    date: Mapped[datetime.date] = mapped_column(sa.Date(), nullable=False) 
 
 class Movie(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)

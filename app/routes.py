@@ -4,7 +4,8 @@ from urllib.parse import urlsplit
 import sqlalchemy as sql
 from app import app, db
 import app.forms as forms
-from app.models import User, Movie, Review
+from app.models import User, Movie, Review, Friend
+import datetime
 
 @app.route("/")
 def home():
@@ -82,13 +83,30 @@ def about():
     return "coming soon"
 
 @login_required
+@app.route("/profile")
+def your_profile():
+    return redirect(url_for("profile", username=current_user.username))
+
+@login_required
 @app.route("/profile/<username>")
 def profile(username):
     user = db.session.scalar(sql.select(User).where(User.username == username))
     if user is None: return "page not found", 404
     if current_user.username == username:
-        return render_template("your_profile.html")
-    return render_template("profile.html")
+        return render_template("your_profile.html", user=user)
+    return render_template("profile.html", user=user)
+
+@login_required
+@app.route("/profile/<username>/friend_request", methods=["GET", "POST"])
+def friend_request(username):
+    other_user: User = db.session.scalar(sql.select(User).where(User.username == username))
+    if other_user is None: return "user not found", 404
+    if current_user.id == other_user.id: return "cant friend request yourself", 422
+    other_user.friends.append(current_user)
+    current_user.friends.append(other_user)
+    db.session.commit()
+
+    return "<pre>" + "\n".join(user.username for user in other_user.friends) + "</pre>"
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

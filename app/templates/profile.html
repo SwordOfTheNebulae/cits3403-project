@@ -1,6 +1,12 @@
 {% extends 'index.html' %}
 <!--  -->
 {% block body %}
-<h4>{{current_user.username}}'s profile</h4>
+<h4>{{user.username}}'s profile</h4>
 <p>profile details here...</p>
+<h5>Friends</h5>
+<ul>
+    {% for friend in user.friends %}
+    <li><a href="{{url_for('profile', username=friend.username)}}">{{ friend.username }}</a></li>
+    {% endfor %}
+</ul>
 {% endblock %}
