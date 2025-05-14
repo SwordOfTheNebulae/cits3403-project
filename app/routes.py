@@ -2,6 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.parse import urlsplit
 import sqlalchemy as sql
+from sqlalchemy import and_, or_
 from app import app, db
 import app.forms as forms
 from app.models import User, Movie, Review, Friend
@@ -40,8 +41,10 @@ def movie_page(movie_id):
     movie = db.session.get(Movie, movie_id)
     if movie is None:
         return "Movie not found", 404
+    friends: set[int] = {friend.id for friend in current_user.friends} if current_user.is_authenticated else set()
+    if current_user.is_authenticated: friends.add(current_user.id)
     reviews = db.session.scalars(
-        sql.select(Review).where(Review.movie_id == movie_id).order_by(Review.id.desc())
+        sql.select(Review).where(and_(Review.movie_id == movie_id, or_(Review.private == False, Review.user_id.in_(friends)))).order_by(Review.id.desc())
     ).all()
     return render_template("movie.html", title=movie.title, movie=movie, reviews=reviews)
 
@@ -54,12 +57,13 @@ def submit_review(movie_id):
 
     rating = request.form.get("rating", type=int)
     text = request.form.get("review", type=str)
+    is_public_review = request.form.get("public", type=bool)
 
     if not (1 <= rating <= 10):
         flash("Rating must be between 1 and 10.")
         return redirect(url_for("movie_page", movie_id=movie_id))
 
-    review = Review(user_id=current_user.id, movie_id=movie_id, rating=rating, text=text)
+    review = Review(user_id=current_user.id, movie_id=movie_id, rating=rating, text=text, private=not is_public_review)
     db.session.add(review)
 
     # update average rating
@@ -92,9 +96,21 @@ def your_profile():
 def profile(username):
     user = db.session.scalar(sql.select(User).where(User.username == username))
     if user is None: return "page not found", 404
-    if current_user.username == username:
-        return render_template("your_profile.html", user=user)
-    return render_template("profile.html", user=user)
+    see_private = current_user in user.friends or current_user == user
+    reviews = db.session.scalars(
+        sql.select(Review).where(
+            Review.user_id == user.id
+            if see_private else
+            and_(Review.user_id == user.id, Review.private == False)
+        ).order_by(Review.id.desc())
+    ).all()
+    print(sql.select(Review).where(
+            Review.user_id == user.id
+            if see_private else
+            and_(Review.user_id == user.id, Review.private == False)
+        ).order_by(Review.id.desc()))
+    
+    return render_template("your_profile.html" if current_user.username == username else "profile.html", user=user, reviews=reviews)
 
 @login_required
 @app.route("/profile/<username>/friend_request", methods=["GET", "POST"])

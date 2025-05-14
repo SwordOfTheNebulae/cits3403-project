@@ -18,6 +18,13 @@
 		<label for="review">Review:</label><br />
 		<textarea id="review" name="review" rows="4" cols="50" required></textarea><br />
 
+		<input type="checkbox" id="public" name="public" />
+		<label for="public">
+			Make this review public<br />
+			<small>Public reviews are visible to anybody. Private reviews are only visible to your friends.</small>
+		</label>
+		<br />
+
 		<button type="submit">Submit</button>
 	</form>
 	{% else %}
