@@ -2,7 +2,20 @@
 
 {% block body %}
 <h4>{{user.username}}'s profile</h4>
-<p>profile details here...</p>
+<p>more profile details here...</p>
+<h5>Reviews</h5>
+{% if reviews %}
+<ul>
+    {% for review in reviews %}
+    <li>
+        <p><strong><a href="{{url_for('movie_page', movie_id=review.movie.id)}}">{{ review.movie.title }}</a> ({{ review.movie.release_year }})</strong>, {{ review.rating }}/10</p>
+        <p>{{ review.text }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>{% if user == current_user %}You don't have any reviews yet{% else %}This user has no reviews yet{% endif %}.</p>
+{% endif %}
 <hr>
 <h5>Friends</h5>
 <ul>
