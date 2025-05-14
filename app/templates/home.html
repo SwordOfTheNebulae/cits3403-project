@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+<!--  -->
+{% block body %}
+
+<h3>Welcome to sitename{% if current_user.is_authenticated %}, {{ current_user.username }}{% endif %}</h3>
+<hr>
+<h4>Movies</h4>
+<div>(movies here.......)</div>
+<hr>
+<h4>What your friends are up to</h4>
+<div>(friend activities here.....)</div>
+
+{% endblock %}

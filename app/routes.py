@@ -9,7 +9,7 @@ import datetime
 
 @app.route("/")
 def home():
-    return render_template("not_logged_in.html", title="Sitename")
+    return render_template("main.html", title="Sitename")
 
 @app.route("/movies")
 def movies():
