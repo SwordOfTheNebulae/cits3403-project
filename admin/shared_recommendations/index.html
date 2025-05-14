@@ -1,0 +1,83 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Shared Recommendations - Movie Recommendation Admin{% endblock %}
+
+{% block page_title %}Shared Recommendations{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">All Shared Recommendations</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="sharedRecsTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Title</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th>Status</th>
+                        <th>Movies</th>
+                        <th>Shared With</th>
+                        <th>Key</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recommendation in recommendations %}
+                    <tr>
+                        <td>{{ recommendation.id }}</td>
+                        <td>{{ recommendation.user.username }}</td>
+                        <td>{{ recommendation.title }}</td>
+                        <td>{{ recommendation.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ recommendation.updated_at.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            {% if recommendation.is_public %}
+                                <span class="badge badge-success">Public</span>
+                            {% else %}
+                                <span class="badge badge-secondary">Private</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ recommendation.movies|length }}</td>
+                        <td>{{ recommendation.shared_with|length }}</td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm" value="{{ recommendation.share_key }}" readonly>
+                                <div class="input-group-append">
+                                    <button class="btn btn-sm btn-outline-secondary copy-btn" type="button" data-clipboard-text="{{ recommendation.share_key }}">
+                                        <i class="fa fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#sharedRecsTable').DataTable({
+            "pageLength": 25,
+            "order": [[ 0, "desc" ]]
+        });
+        
+        var clipboard = new ClipboardJS('.copy-btn');
+        clipboard.on('success', function(e) {
+            $(e.trigger).tooltip({title: "Copied!", trigger: "manual"}).tooltip('show');
+            setTimeout(function() {
+                $(e.trigger).tooltip('hide');
+            }, 1000);
+            e.clearSelection();
+        });
+    });
+</script>
+{% endblock %} 

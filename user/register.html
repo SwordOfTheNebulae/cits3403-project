@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block main_content %}
+	<section class="banner-section p120">
+		<div class="container">
+			<div class="banner-text">
+				<h2>Register to Open the Door to a New World</h2>
+			</div><!--banner-text end-->
+		</div>
+	</section><!--banner-section end-->
+
+	<section class="form_popup">
+		
+		<div class="signup_form" id="signup_form">
+
+			<div class="user-account-pr">
+				<form action="{{ url_for('auth.register') }}" method='POST'>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="input-sec mgb25">
+                        {{ form.username.label }}
+                        {{ form.username(class="form-control") }}
+                        {% if form.username.errors %}
+                            <div class="errors">
+                                {% for error in form.username.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="input-sec mgb25">
+                        {{ form.email.label }}
+                        {{ form.email(class="form-control") }}
+                        {% if form.email.errors %}
+                            <div class="errors">
+                                {% for error in form.email.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="input-sec mgb25">
+                        {{ form.password.label }}
+                        {{ form.password(class="form-control") }}
+                        {% if form.password.errors %}
+                            <div class="errors">
+                                {% for error in form.password.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="input-sec mgb25">
+                        {{ form.password2.label }}
+                        {{ form.password2(class="form-control") }}
+                        {% if form.password2.errors %}
+                            <div class="errors">
+                                {% for error in form.password2.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+					<div class="input-sec mb-0">
+						<button type="submit">Register</button>
+					</div><!--input-sec end-->
+				</form>
+			</div><!--user-account end--->
+			<div class="fr-ps">
+				<h1>Already have an account?<a href="{{ url_for('auth.login') }}" title="" class="show_signup"> Login</a></h1>
+			</div><!--fr-ps end-->
+		</div><!--login end--->
+
+	</section><!--form_popup end-->
+{% endblock %}

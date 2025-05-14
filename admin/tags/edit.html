@@ -1,0 +1,135 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Edit Tag - {{ tag.name }} - Movie Recommendation Admin{% endblock %}
+
+{% block page_title %}Edit Tag: {{ tag.name }}{% endblock %}
+
+{% block page_actions %}
+<a href="{{ url_for('admin.tags') }}" class="btn btn-sm btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to Tags
+</a>
+<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">
+    <i class="fa fa-trash"></i> Delete
+</button>
+{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Tag Information</h6>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+                <label for="name">Tag Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ tag.name }}" required>
+                <small class="form-text text-muted">Enter a unique tag name. This will be used to categorize movies.</small>
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-save"></i> Update Tag
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Movies with this Tag</h6>
+            </div>
+            <div class="card-body">
+                {% if tag.movies|length > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Movie Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for movie in tag.movies %}
+                            <tr>
+                                <td>{{ movie.id }}</td>
+                                <td>{{ movie.name }}</td>
+                                <td>
+                                    <a href="{{ url_for('admin.movie_detail', id=movie.id) }}" class="btn btn-sm btn-info">
+                                        <i class="fa fa-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center">No movies associated with this tag.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">User Preferences for this Tag</h6>
+            </div>
+            <div class="card-body">
+                {% if tag.tag_prefers.count() > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for prefer in tag.tag_prefers %}
+                            <tr>
+                                <td>{{ prefer.id }}</td>
+                                <td>{{ prefer.user.username }}</td>
+                                <td>{{ prefer.score }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center">No user preferences for this tag.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete tag <strong>{{ tag.name }}</strong>? This action cannot be undone and will remove this tag from all associated movies and user preferences.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="{{ url_for('admin.tag_delete', id=tag.id) }}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

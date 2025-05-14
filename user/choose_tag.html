@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="browse_categories_sec">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Choose Your Favorite Movie Categories</h3>
+                            <p class="text-muted">Select the movie categories that interest you to get personalized recommendations</p>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="{{ url_for('auth.choose_tags') }}">
+                                {{ form.csrf_token }}
+                                
+                                <div class="browse_cat_lists">
+                                    <div class="row">
+                                        {% for tag in tags %}
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input tag-checkbox" type="checkbox" value="{{ tag.id }}" name="tags" id="tag-{{ tag.id }}">
+                                                <label class="form-check-label" for="tag-{{ tag.id }}">
+                                                    {{ tag.name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary">Save Preferences</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block bottom_js %}
+    <script>
+        $(document).ready(function() {
+            // 使标签选项可以点击切换选中状态
+            $('.tag-checkbox').each(function() {
+                $(this).closest('.form-check').on('click', function(e) {
+                    // 避免点击checkbox本身时触发两次
+                    if (e.target.type !== 'checkbox') {
+                        const checkbox = $(this).find('input[type="checkbox"]');
+                        checkbox.prop('checked', !checkbox.prop('checked'));
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
