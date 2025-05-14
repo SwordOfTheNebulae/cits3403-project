@@ -18,11 +18,15 @@
 {% endif %}
 <hr>
 <h5>Friends</h5>
+{% if user.friends %}
 <ul>
     {% for friend in user.friends %}
     <li><a href="{{url_for('profile', username=friend.username)}}">{{ friend.username }}</a></li>
     {% endfor %}
 </ul>
+{% else %}
+<p>{% if user == current_user %}You don't have any friends yet{% else %}This user has no friends yet{% endif %}.</p>
+{% endif %}
 <script>
 let notif_elem
 document.addEventListener("DOMContentLoaded", () => notif_elem = document.getElementById("notif"))
