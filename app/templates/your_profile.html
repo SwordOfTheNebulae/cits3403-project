@@ -8,7 +8,8 @@
     <a href="{{url_for('logout')}}">Logout</a>
 </p>
 <hr>
-<h4>Incomming friend requests</h4>
+<h5>Incomming friend requests</h5>
+{% if user.friend_requests %}
 <ul>
     {% for other_user in user.friend_requests %}
     <li>
@@ -17,6 +18,9 @@
         <button type="button" onclick="fetch(`{{url_for('deny_friend_request', username=other_user.username)}}`, {method:'POST'}).then(onRes)">Deny friend request</button>
     </li>
     {% endfor %}
+    {% else %}
 </ul>
+<p>You have no pending friend requests.</p>
+{% endif %}
 <div id="notif"></div>
 {% endblock %}
