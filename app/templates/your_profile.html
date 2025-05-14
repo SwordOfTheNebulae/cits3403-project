@@ -5,5 +5,18 @@
 <hr>
 <p>
     <h4>Profile settings</h4>
-    <a href="{{url_for('logout')}}">Logout</a></p>
+    <a href="{{url_for('logout')}}">Logout</a>
+</p>
+<hr>
+<h4>Incomming friend requests</h4>
+<ul>
+    {% for other_user in user.friend_requests %}
+    <li>
+        <a href="{{url_for('profile', username=user.username)}}">{{ other_user.username }}</a>
+        <button type="button" onclick="fetch(`{{url_for('accept_friend_request', username=other_user.username)}}`, {method:'POST'}).then(onRes)">Accept friend request</button>
+        <button type="button" onclick="fetch(`{{url_for('deny_friend_request', username=other_user.username)}}`, {method:'POST'}).then(onRes)">Deny friend request</button>
+    </li>
+    {% endfor %}
+</ul>
+<div id="notif"></div>
 {% endblock %}

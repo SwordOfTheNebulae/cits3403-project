@@ -102,11 +102,61 @@ def friend_request(username):
     other_user: User = db.session.scalar(sql.select(User).where(User.username == username))
     if other_user is None: return "user not found", 404
     if current_user.id == other_user.id: return "cant friend request yourself", 422
+    if current_user in other_user.friend_requests: return "already sent friend request to this user", 422
+    if other_user in current_user.friend_requests: return "this user has already sent you a friend request", 422
+    if other_user in current_user.friends: return "already friends with this user", 422
+    other_user.friend_requests.append(current_user)
+    db.session.commit()
+    return redirect(url_for("profile", username=username)) if request.method == "GET" else "success"
+
+@login_required
+@app.route("/profile/<username>/accept_friend_request", methods=["GET", "POST"])
+def accept_friend_request(username):
+    other_user: User = db.session.scalar(sql.select(User).where(User.username == username))
+    if other_user is None: return "user not found", 404
+    if other_user not in current_user.friend_requests:
+        return "no friend request from this user", 422
+    current_user.friend_requests.remove(other_user)
+    success_result = redirect(url_for("profile", username=username)) if request.method == "GET" else "success"
+    if other_user in current_user.friends: return success_result
     other_user.friends.append(current_user)
     current_user.friends.append(other_user)
     db.session.commit()
+    return success_result
 
-    return "<pre>" + "\n".join(user.username for user in other_user.friends) + "</pre>"
+@login_required
+@app.route("/profile/<username>/deny_friend_request", methods=["GET", "POST"])
+def deny_friend_request(username):
+    other_user: User = db.session.scalar(sql.select(User).where(User.username == username))
+    if other_user is None: return "user not found", 404
+    if other_user not in current_user.friend_requests:
+        return "no friend request from this user", 422
+    current_user.friend_requests.remove(other_user)
+    db.session.commit()
+    return redirect(url_for("profile", username=username)) if request.method == "GET" else "success"
+
+@login_required
+@app.route("/profile/<username>/cancel_friend_request", methods=["GET", "POST"])
+def cancel_friend_request(username):
+    other_user: User = db.session.scalar(sql.select(User).where(User.username == username))
+    if other_user is None: return "user not found", 404
+    if current_user not in other_user.friend_requests:
+        return "you haven't sent a friend request to this user", 422
+    other_user.friend_requests.remove(current_user)
+    db.session.commit()
+    return redirect(url_for("profile", username=username)) if request.method == "GET" else "success"
+
+@login_required
+@app.route("/profile/<username>/remove_friend", methods=["GET", "POST"])
+def remove_friend(username):
+    other_user: User = db.session.scalar(sql.select(User).where(User.username == username))
+    if other_user is None: return "user not found", 404
+    if other_user not in current_user.friends:
+        return "not friends with this user", 422
+    other_user.friends.remove(current_user)
+    current_user.friends.remove(other_user)
+    db.session.commit()
+    return redirect(url_for("profile", username=username)) if request.method == "GET" else "success"
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

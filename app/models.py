@@ -12,7 +12,13 @@ Friend = Table(
     db.Model.metadata,
     Column("account_a", sa.ForeignKey("user.id")),
     Column("account_b", sa.ForeignKey("user.id")),
-    Column("friends_since", sa.Date())
+)
+
+FriendRequest = Table(
+    "friend_request",
+    db.Model.metadata,
+    Column("account_to", sa.ForeignKey("user.id")),
+    Column("account_from", sa.ForeignKey("user.id")),
 )
 
 class User(UserMixin, db.Model):
@@ -23,6 +29,7 @@ class User(UserMixin, db.Model):
 
     reviews = relationship("Review", back_populates="user")
     friends = relationship("User", secondary=Friend, primaryjoin=Friend.c.account_a==id, secondaryjoin=Friend.c.account_b==id)
+    friend_requests = relationship("User", secondary=FriendRequest, primaryjoin=FriendRequest.c.account_to==id, secondaryjoin=FriendRequest.c.account_from==id)
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -36,12 +43,6 @@ class User(UserMixin, db.Model):
 @login.user_loader
 def load_user(id):
     return db.session.get(User, int(id))
-
-class FriendRequest(db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True)
-    account_to: Mapped[int] = mapped_column(sa.ForeignKey("user.id"))
-    account_from: Mapped[int] = mapped_column(sa.ForeignKey("user.id"))
-    date: Mapped[datetime.date] = mapped_column(sa.Date(), nullable=False) 
 
 class Movie(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
