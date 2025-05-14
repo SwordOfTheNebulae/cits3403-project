@@ -64,6 +64,8 @@ class Review(db.Model):
 
     user_id: Mapped[int] = mapped_column(sa.ForeignKey("user.id"))
     movie_id: Mapped[int] = mapped_column(sa.ForeignKey("movie.id"))
+    
+    private: Mapped[bool] = mapped_column(sa.Boolean)
 
     user = relationship("User", back_populates="reviews")
     movie = relationship("Movie", back_populates="reviews")
