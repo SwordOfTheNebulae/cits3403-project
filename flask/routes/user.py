@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify, abort, current_app
-from create_app import db
+from app.create_app import db
 from sqlalchemy import func
-from models.models import User, Movie, Rate, Comment, LikeComment, MovieUpload, SharedRecommendation, Tags
-from utils.decorators import login_required
-from utils.forms import EditProfileForm, CommentForm, RateForm, MovieUploadForm, MovieForm, SharedRecommendationForm
-from utils.file_handlers import allowed_file, save_file, process_csv_file
+from app.models.models import User, Movie, Rate, Comment, LikeComment, MovieUpload, SharedRecommendation, Tags
+from app.utils.decorators import login_required
+from app.utils.forms import EditProfileForm, CommentForm, RateForm, MovieUploadForm, MovieForm, SharedRecommendationForm
+from app.utils.file_handlers import allowed_file, save_file, process_csv_file
 import os
 import uuid
 from datetime import datetime
