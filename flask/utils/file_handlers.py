@@ -44,8 +44,8 @@ def process_csv_file(file_path, upload_id=None):
     
     其中tags是以|分隔的标签列表
     """
-    from models.models import Tags, Movie, MovieUpload
-    from create_app import db
+    from app.models.models import Tags, Movie, MovieUpload
+    from app.create_app import db
     
     movies_data = []
     processed_count = 0
