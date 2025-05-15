@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FloatField, DateField, BooleanField, SelectMultipleField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, URL, Optional
-from models.models import User, Tags
+from app.models.models import User, Tags
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired('Please enter your username')])
@@ -94,7 +94,7 @@ class SharedRecommendationForm(FlaskForm):
     
     def __init__(self, current_user_id, *args, **kwargs):
         super(SharedRecommendationForm, self).__init__(*args, **kwargs)
-        from models.models import Movie, User
+        from app.models.models import Movie, User
         self.movies.choices = [(movie.id, movie.name) for movie in Movie.query.all()]
         self.shared_with.choices = [(user.id, user.username) for user in User.query.filter(User.id != current_user_id).all()]
 
