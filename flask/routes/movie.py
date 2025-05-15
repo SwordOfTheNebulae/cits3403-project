@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify, abort
-from create_app import db
+from app.create_app import db
 from sqlalchemy import func, or_, desc, text
 from models.models import Movie, Tags, Rate, Comment, LikeComment, User
 from utils.decorators import login_required
