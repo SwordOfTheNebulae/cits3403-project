@@ -30,7 +30,7 @@ def login():
             new = session.get('new')
             if new:
                 tags = Tags.query.all()
-                return render_template('user/choose_tag.html', tags=tags)
+                return render_template('user/choose_tag.html', tags=tags, form=form)
 
             return redirect(url_for('movie.index'))
         else:
