@@ -2,7 +2,7 @@ from flask import current_app
 from datetime import datetime, date
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import func
-from create_app import db
+from app.create_app import db
 
 # 用户和电影的多对多关系表 - 收藏关系
 movie_collectors = db.Table('movie_collectors',
