@@ -1,0 +1,204 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Movie Detail - {{ movie.name }} - Movie Recommendation Admin{% endblock %}
+
+{% block page_title %}Movie Details: {{ movie.name }}{% endblock %}
+
+{% block page_actions %}
+<a href="{{ url_for('admin.movies') }}" class="btn btn-sm btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to Movies
+</a>
+<a href="{{ url_for('admin.movie_edit', id=movie.id) }}" class="btn btn-sm btn-primary">
+    <i class="fa fa-edit"></i> Edit
+</a>
+<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">
+    <i class="fa fa-trash"></i> Delete
+</button>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Movie Poster</h6>
+            </div>
+            <div class="card-body text-center">
+                {% if movie.image_link and movie.image_link.startswith('http') %}
+                    <img src="{{ movie.image_link }}" alt="{{ movie.name }}" class="img-fluid rounded">
+                {% elif movie.image_link %}
+                    <img src="{{ MEDIA_URL }}{{ movie.image_link }}" alt="{{ movie.name }}" class="img-fluid rounded">
+                {% else %}
+                    <img src="{{ url_for('static', filename='img/no-image.jpg') }}" alt="No Image" class="img-fluid rounded">
+                {% endif %}
+                <div class="mt-3">
+                    <div class="btn-group">
+                        <a href="{{ movie.douban_link }}" target="_blank" class="btn btn-sm btn-info">
+                            <i class="fa fa-link"></i> Douban
+                        </a>
+                        {% if movie.imdb_link %}
+                        <a href="{{ movie.imdb_link }}" target="_blank" class="btn btn-sm btn-warning">
+                            <i class="fa fa-film"></i> IMDB
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Movie Information</h6>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th width="30%">ID</th>
+                        <td>{{ movie.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ movie.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Director</th>
+                        <td>{{ movie.director }}</td>
+                    </tr>
+                    <tr>
+                        <th>Lead Actors</th>
+                        <td>{{ movie.leader }}</td>
+                    </tr>
+                    <tr>
+                        <th>Country</th>
+                        <td>{{ movie.country }}</td>
+                    </tr>
+                    <tr>
+                        <th>Release Date</th>
+                        <td>{{ movie.years.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Douban Rating</th>
+                        <td>{{ movie.d_rate }} ({{ movie.d_rate_nums }} votes)</td>
+                    </tr>
+                    <tr>
+                        <th>System Rating</th>
+                        <td>{{ movie.movie_rate }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tags</th>
+                        <td>
+                            {% for tag in movie.tags %}
+                                <span class="badge badge-info">{{ tag.name }}</span>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Introduction</th>
+                        <td style="white-space: pre-line;">{{ movie.intro }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Comments</h6>
+                <span class="badge badge-primary">{{ movie.comments.count() }} Total</span>
+            </div>
+            <div class="card-body">
+                {% if movie.comments.count() > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Content</th>
+                                <th>Date</th>
+                                <th>Likes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for comment in movie.comments.order_by(Comment.create_time.desc()).limit(5) %}
+                            <tr>
+                                <td>{{ comment.user.username }}</td>
+                                <td>{{ comment.content }}</td>
+                                <td>{{ comment.create_time.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ comment.likes.count() }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center">No comments found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Ratings</h6>
+                <span class="badge badge-primary">{{ movie.rates.count() }} Total</span>
+            </div>
+            <div class="card-body">
+                {% if movie.rates.count() > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Rating</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rate in movie.rates.order_by(Rate.create_time.desc()).limit(5) %}
+                            <tr>
+                                <td>{{ rate.user.username }}</td>
+                                <td>{{ rate.mark }}</td>
+                                <td>{{ rate.create_time.strftime('%Y-%m-%d') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center">No ratings found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete movie <strong>{{ movie.name }}</strong>? This action cannot be undone and will delete all associated data.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="{{ url_for('admin.movie_delete', id=movie.id) }}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

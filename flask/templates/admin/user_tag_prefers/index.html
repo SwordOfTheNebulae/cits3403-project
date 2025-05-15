@@ -1,0 +1,57 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}User Tag Preferences - Movie Recommendation Admin{% endblock %}
+
+{% block page_title %}User Tag Preferences{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">All User Tag Preferences</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="userTagPrefersTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Tag</th>
+                        <th>Score</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prefer in prefers %}
+                    <tr>
+                        <td>{{ prefer.id }}</td>
+                        <td>{{ prefer.user.username }}</td>
+                        <td>{{ prefer.tag.name }}</td>
+                        <td>{{ prefer.score }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.user_detail', id=prefer.user.id) }}" class="btn btn-sm btn-info">
+                                <i class="fa fa-user"></i> View User
+                            </a>
+                            <a href="{{ url_for('admin.tag_edit', id=prefer.tag.id) }}" class="btn btn-sm btn-primary">
+                                <i class="fa fa-tag"></i> View Tag
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        $('#userTagPrefersTable').DataTable({
+            "pageLength": 25,
+            "order": [[ 0, "desc" ]]
+        });
+    });
+</script>
+{% endblock %} 

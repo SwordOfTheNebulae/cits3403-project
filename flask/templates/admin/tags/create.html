@@ -1,0 +1,34 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Add New Tag - Movie Recommendation Admin{% endblock %}
+
+{% block page_title %}Add New Tag{% endblock %}
+
+{% block page_actions %}
+<a href="{{ url_for('admin.tags') }}" class="btn btn-sm btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to Tags
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Tag Information</h6>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+                <label for="name">Tag Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+                <small class="form-text text-muted">Enter a unique tag name. This will be used to categorize movies.</small>
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-save"></i> Create Tag
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

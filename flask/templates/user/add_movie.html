@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    .tag-choices {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 4px;
+    }
+    .tag-choices ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+    .tag-choices li {
+        margin-bottom: 5px;
+    }
+    .required-field::after {
+        content: " *";
+        color: red;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="vds-main">
+    <div class="vidz-row">
+        <div class="container">
+            <div class="vidz_sec">
+                <h3>Add Movie Manually</h3>
+                <div class="row">
+                    <div class="col-lg-8">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                        
+                        <form method="post" enctype="multipart/form-data" class="form" id="movieForm">
+                            {{ form.csrf_token }}
+                            
+                            <div class="form-group">
+                                <label for="{{ form.name.id }}" class="required-field">Movie Name:</label>
+                                {{ form.name(class="form-control") }}
+                                {% if form.name.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.director.id }}" class="required-field">Director:</label>
+                                {{ form.director(class="form-control") }}
+                                {% if form.director.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.director.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.country.id }}" class="required-field">Country:</label>
+                                {{ form.country(class="form-control") }}
+                                {% if form.country.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.country.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.years.id }}" class="required-field">Release Date:</label>
+                                {{ form.years(class="form-control", type="date") }}
+                                <small class="form-text text-muted">Format: YYYY-MM-DD</small>
+                                {% if form.years.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.years.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.leader.id }}" class="required-field">Lead Actors:</label>
+                                {{ form.leader(class="form-control") }}
+                                {% if form.leader.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.leader.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.d_rate_nums.id }}" class="required-field">Douban Rating Count:</label>
+                                {{ form.d_rate_nums(class="form-control", type="number") }}
+                                {% if form.d_rate_nums.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.d_rate_nums.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.d_rate.id }}" class="required-field">Douban Rating:</label>
+                                {{ form.d_rate(class="form-control") }}
+                                {% if form.d_rate.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.d_rate.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.intro.id }}" class="required-field">Description:</label>
+                                {{ form.intro(class="form-control") }}
+                                {% if form.intro.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.intro.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.image_link.id }}" class="required-field">Cover Image:</label>
+                                {{ form.image_link(class="form-control") }}
+                                {% if form.image_link.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.image_link.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.douban_link.id }}" class="required-field">Douban Link:</label>
+                                {{ form.douban_link(class="form-control") }}
+                                {% if form.douban_link.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.douban_link.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.douban_id.id }}">Douban ID:</label>
+                                {{ form.douban_id(class="form-control") }}
+                                {% if form.douban_id.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.douban_id.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.imdb_link.id }}">IMDB Link:</label>
+                                {{ form.imdb_link(class="form-control") }}
+                                {% if form.imdb_link.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.imdb_link.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Movie Tags:</label>
+                                <div class="tag-choices">
+                                    {{ form.tags }}
+                                </div>
+                                {% if form.tags.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.tags.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                <small class="form-text text-muted">请不要重复选择相同的标签</small>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Add Movie</button>
+                            <button type="reset" class="btn btn-secondary">Reset Form</button>
+                            <a href="{{ url_for('user.upload_movie_csv') }}" class="btn btn-secondary">CSV Batch Upload</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // 当添加成功后，检查URL是否有success参数，如果有则清空表单
+    document.addEventListener('DOMContentLoaded', function() {
+        // 为表单添加提交事件监听器，进行客户端验证
+        const form = document.getElementById('movieForm');
+        if (form) {
+            form.addEventListener('submit', function(event) {
+                // 标记是否有错误
+                let hasError = false;
+                
+                // 获取所有必填字段
+                const requiredFields = document.querySelectorAll('.required-field');
+                
+                // 循环检查每个必填字段
+                requiredFields.forEach(function(label) {
+                    const inputId = label.getAttribute('for');
+                    const input = document.getElementById(inputId);
+                    
+                    if (input && !input.value.trim()) {
+                        // 创建或显示错误消息
+                        let errorDiv = input.nextElementSibling;
+                        if (!errorDiv || !errorDiv.classList.contains('alert-danger')) {
+                            errorDiv = document.createElement('div');
+                            errorDiv.classList.add('alert', 'alert-danger');
+                            input.parentNode.insertBefore(errorDiv, input.nextSibling);
+                        }
+                        errorDiv.textContent = 'This field is required';
+                        hasError = true;
+                    }
+                });
+                
+                // 检查并去除重复的标签选择
+                const tagSelect = document.querySelector('select[name="tags"]');
+                if (tagSelect && tagSelect.multiple) {
+                    // 获取所有选中的选项
+                    const selectedOptions = Array.from(tagSelect.selectedOptions);
+                    
+                    // 使用Set去重
+                    const uniqueValues = new Set();
+                    const duplicates = [];
+                    
+                    selectedOptions.forEach(option => {
+                        if (uniqueValues.has(option.value)) {
+                            duplicates.push(option.text);
+                            option.selected = false;  // 取消重复选项的选中状态
+                        } else {
+                            uniqueValues.add(option.value);
+                        }
+                    });
+                    
+                    // 如果有重复，显示警告但不阻止提交
+                    if (duplicates.length > 0) {
+                        console.warn('已移除重复的标签选择: ' + duplicates.join(', '));
+                    }
+                }
+                
+                // 如果有错误，阻止表单提交
+                if (hasError) {
+                    event.preventDefault();
+                }
+            });
+            
+            // 如果URL中有success参数，显示成功消息
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success')) {
+                // 添加成功消息
+                const message = document.createElement('div');
+                message.classList.add('alert', 'alert-success');
+                message.textContent = 'Movie added successfully!';
+                form.parentNode.insertBefore(message, form);
+                
+                // 5秒后自动隐藏消息
+                setTimeout(function() {
+                    message.style.display = 'none';
+                }, 5000);
+            }
+        }
+    });
+</script>
+{% endblock %} 
