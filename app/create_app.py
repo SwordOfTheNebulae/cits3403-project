@@ -15,7 +15,8 @@ def create_app():
     # 创建Flask应用
     app = Flask(__name__, static_folder='static', template_folder='templates')
     app.config['SECRET_KEY'] = secrets.token_hex(16)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movie.db'
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'instance', 'movie.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'media')
     app.config['MEDIA_URL'] = '/media/'
