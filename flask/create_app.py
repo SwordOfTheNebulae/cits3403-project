@@ -13,7 +13,7 @@ csrf = CSRFProtect()
 
 def create_app():
     # 创建Flask应用
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static', template_folder='templates')
     app.config['SECRET_KEY'] = secrets.token_hex(16)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movie.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -37,17 +37,17 @@ def create_app():
     csrf.init_app(app)
 
     # 注册自定义过滤器
-    from utils.filters import register_filters
+    from app.utils.filters import register_filters
     register_filters(app)
 
     # 导入模型 (只导入，不使用)
-    from models.models import User, Movie, Tags, Rate, Comment, LikeComment, UserTagPrefer, SharedRecommendation, MovieUpload
+    from app.models.models import User, Movie, Tags, Rate, Comment, LikeComment, UserTagPrefer, SharedRecommendation, MovieUpload
 
     # 导入路由蓝图
-    from routes.auth import auth_bp
-    from routes.movie import movie_bp
-    from routes.user import user_bp
-    from routes.admin import admin_bp
+    from app.routes.auth import auth_bp
+    from app.routes.movie import movie_bp
+    from app.routes.user import user_bp
+    from app.routes.admin import admin_bp
 
     # 注册蓝图
     app.register_blueprint(auth_bp)
@@ -67,7 +67,7 @@ def create_app():
     @app.context_processor
     def inject_user():
         from flask import session
-        from models.models import User
+        from app.models.models import User
         if session.get('login_in') and session.get('user_id'):
             user = User.query.get(session.get('user_id'))
             return dict(user=user)
@@ -84,7 +84,7 @@ def create_app():
 
     # 创建默认管理员账户
     def create_default_admin():
-        from models.models import User
+        from app.models.models import User
         # 检查是否已存在用户名为admin的账户
         admin = User.query.filter_by(username='admin').first()
         if not admin:
