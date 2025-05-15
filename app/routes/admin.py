@@ -3,14 +3,14 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, DateField, TextAreaField, IntegerField, FloatField, BooleanField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
 from sqlalchemy import func
-from create_app import db
-from models.models import User, Movie, Tags, Rate, Comment, LikeComment, UserTagPrefer, SharedRecommendation, MovieUpload
+from app.create_app import db
+from app.models.models import User, Movie, Tags, Rate, Comment, LikeComment, UserTagPrefer, SharedRecommendation, MovieUpload
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 import uuid
 import os
 
-from utils.file_handlers import save_file
+from app.utils.file_handlers import save_file
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
