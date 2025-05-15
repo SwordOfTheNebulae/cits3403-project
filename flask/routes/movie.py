@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify, abort
 from app.create_app import db
 from sqlalchemy import func, or_, desc, text
-from models.models import Movie, Tags, Rate, Comment, LikeComment, User
-from utils.decorators import login_required
-from utils.forms import CommentForm, RateForm
-from utils.recommend import recommend_by_user_id, recommend_by_item_id, update_item_movie_sim_matrix
+from app.models.models import Movie, Tags, Rate, Comment, LikeComment, User
+from app.utils.decorators import login_required
+from app.utils.forms import CommentForm, RateForm
+from app.utils.recommend import recommend_by_user_id, recommend_by_item_id, update_item_movie_sim_matrix
 from flask_paginate import Pagination, get_page_parameter
 
 movie_bp = Blueprint('movie', __name__)
