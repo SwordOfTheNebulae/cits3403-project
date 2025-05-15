@@ -18,6 +18,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new_css/responsive.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new_css/color.css') }}">
     {% block extra_css %}{% endblock %}
+    <script>
+        const hotImgPath = "{{ url_for('static', filename='images/hot.png') }}?v=1.0.1";
+    </script>
 </head>
 <body>
 <div class="wrapper hp_1">
@@ -57,27 +60,27 @@
                                 <ul class="mm_menu">
                                     {% if session.get('login_in') == True %}
                                         <li>
-												<span>
-													<i class="icon-user"></i>
-												</span>
+											<span>
+												<i class="icon-user"></i>
+											</span>
                                             <a href="{{ url_for('user.personal') }}" title="">Profile</a>
                                         </li>
                                         <li>
-												<span>
-													<i class="icon-logout"></i>
-												</span>
+											<span>
+												<i class="icon-logout"></i>
+											</span>
                                             <a href="{{ url_for('auth.logout') }}" title="">Logout</a>
                                             {% else %}
                                         <li>
-												<span>
-													<i class="icon-paid_sub"></i>
-												</span>
+											<span>
+												<i class="icon-paid_sub"></i>
+											</span>
                                             <a href="{{ url_for('auth.register') }}" title="">Register</a>
                                         </li>
                                         <li>
-												<span>
-													<i class="icon-settings"></i>
-												</span>
+											<span>
+												<i class="icon-settings"></i>
+											</span>
                                             <a href="{{ url_for('auth.login') }}" title="">Login</a>
                                         </li>
                                     {% endif %}
@@ -262,14 +265,22 @@
     {% block main_content %}
     {% block content %}{% endblock %}
     {% endblock %}
-    
-    <script src="{{ url_for('static', filename='js/new_js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/new_js/popper.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/new_js/flatpickr.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/new_js/script.js') }}"></script>
-    {% block bottom_js %}
-    {% endblock %}
+</div>
+
+<!-- 插入调试输出和版本号 -->
+<script src="{{ url_for('static', filename='js/new_js/jquery.min.js') }}?v=1.0.1"></script>
+<script src="{{ url_for('static', filename='js/new_js/popper.js') }}?v=1.0.1"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}?v=1.0.1"></script>
+<script src="{{ url_for('static', filename='js/new_js/flatpickr.js') }}?v=1.0.1"></script>
+<script>
+    if (typeof $ === 'undefined') {
+        alert('jQuery 加载失败！请检查 static/js/new_js/jquery.min.js 是否存在。');
+    }
+    console.log("🔧 script.js is loading... jQuery is:", typeof $);
+</script>
+<script src="{{ url_for('static', filename='js/new_js/script.js') }}?v=1.0.1"></script>
+
+{% block bottom_js %}{% endblock %}
     <script>
         // 移除之前的菜单激活脚本
 
@@ -324,7 +335,6 @@
             });
         }
 
-        check_login_and_get_recommendations();
 
         function get_latest_movie() {
             $.ajax({
@@ -346,7 +356,8 @@
                 }
             });
         }
-
+        
+        heck_login_and_get_recommendations();
         get_latest_movie();
     </script>
 </body>
