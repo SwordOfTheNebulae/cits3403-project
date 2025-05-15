@@ -4,7 +4,7 @@ from math import sqrt
 import pickle
 import os
 from flask import current_app
-from models.models import User, Movie, Rate
+from app.models.models import User, Movie, Rate
 from datetime import datetime, timedelta
 
 # 为了保持与原始代码相似，我们定义相同的缓存键
@@ -33,7 +33,7 @@ def save_item_sim_matrix(matrix):
 # 更新物品相似度矩阵
 def update_item_movie_sim_matrix():
     from flask import current_app
-    from models.models import Rate, Movie
+    from app.models.models import Rate, Movie
     from sqlalchemy import func
 
     # 从数据库获取所有评分数据
@@ -102,7 +102,7 @@ def update_item_movie_sim_matrix():
 # 基于用户的协同过滤推荐
 def user_cf(target_user_id, n_items=15):
     from flask import current_app
-    from models.models import Rate, User, Movie
+    from app.models.models import Rate, User, Movie
     from sqlalchemy import func
 
     # 获取目标用户的评分数据
@@ -210,7 +210,7 @@ def recommend_by_user_id(user_id, n_items=15):
 def recommend_by_item_id(user_id, n_items=15):
     """基于物品的协同过滤推荐"""
     from flask import current_app
-    from models.models import Rate, Movie
+    from app.models.models import Rate, Movie
 
     # 获取目标用户的评分数据
     user_rates = Rate.query.filter_by(user_id=user_id).all()
