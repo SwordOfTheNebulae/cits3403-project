@@ -1,4 +1,4 @@
-# Flask Web Application for [Project Name]
+# Flask Web Application for [CineRate]
 
 ## Purpose
 
