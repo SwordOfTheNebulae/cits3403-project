@@ -38,7 +38,7 @@ CineRate is a web-based movie recommendation system that allows users to:
 1. Clone the repository:
    ```bash
    git clone https://github.com/SwordOfTheNebulae/cits3403-project.git
-   cd cits3403-project
+   cd flask
 2. Create and activate virtual environment:
    ```bash
    python3 -m venv venv
@@ -49,7 +49,7 @@ CineRate is a web-based movie recommendation system that allows users to:
    pip install -r requirements.txt
 4. Run flask
    ```bash
-   flask run  # Default running address: http://127.0.0.1:5000/
+   python app.py  # Default running address: http://127.0.0.1:5000/
 
 ---
 
@@ -66,7 +66,7 @@ CineRate is a web-based movie recommendation system that allows users to:
 
 ```bash
 .
-├── app/                           # Main application package 
+├── flask/                           # Main application package 
 │   ├── app.py                     # Flask application script 
 │   ├── config.py                  # Application configuration settings 
 │   ├── create_app.py              # Application factory function
