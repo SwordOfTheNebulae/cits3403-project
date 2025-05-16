@@ -82,12 +82,12 @@ CineRate is a web-based movie recommendation system that allows users to:
 │   │   ├── images/               
 │   │   └── js/                    
 │   ├── templates/                 # Jinja2 HTML templates 
-│   └── utils/                     # Utility/helper functions 
+│   ├── utils/                     # Utility/helper functions
+|   └── tests/                     # Test scripts and cases 
 ├── media/                         # Uploaded media files 
 │   ├── comment/                   
 │   ├── movie_cover/               
 │   └── movie_uploads/             
-├── tests/                         # Test scripts and cases 
 ├── .gitignore   
 ├── requirements.txt               # Python package dependencies 
 └── README.md                      # Project documentation 
