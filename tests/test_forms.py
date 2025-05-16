@@ -1,6 +1,6 @@
-from app.utils.forms import LoginForm, RegisterForm, CommentForm, RateForm
+from utils.forms import LoginForm, RegisterForm, CommentForm, RateForm
 from werkzeug.datastructures import MultiDict
-from app.create_app import create_app
+from create_app import create_app
 
 app = create_app()
 
