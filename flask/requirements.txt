@@ -1,0 +1,13 @@
+flask
+flask-sqlalchemy
+flask-migrate
+flask-wtf
+werkzeug
+wtforms
+jinja2
+flask-paginate
+sqlalchemy
+pillow
+python-dotenv
+email-validator
+flask-bootstrap4

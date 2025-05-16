@@ -1,0 +1,66 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Movie Uploads - Movie Recommendation Admin{% endblock %}
+
+{% block page_title %}Movie Uploads{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">All Movie Uploads</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="uploadsTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>File</th>
+                        <th>Uploaded At</th>
+                        <th>Status</th>
+                        <th>Processed</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for upload in uploads %}
+                    <tr>
+                        <td>{{ upload.id }}</td>
+                        <td>{{ upload.user.username }}</td>
+                        <td>{{ upload.csv_file }}</td>
+                        <td>{{ upload.uploaded_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            {% if upload.status == 'pending' %}
+                                <span class="badge badge-warning">Pending</span>
+                            {% elif upload.status == 'processing' %}
+                                <span class="badge badge-info">Processing</span>
+                            {% elif upload.status == 'completed' %}
+                                <span class="badge badge-success">Completed</span>
+                            {% elif upload.status == 'failed' %}
+                                <span class="badge badge-danger">Failed</span>
+                            {% else %}
+                                <span class="badge badge-secondary">{{ upload.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ upload.processed_count }}</td>
+                        <td>{{ upload.notes or 'No notes' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        $('#uploadsTable').DataTable({
+            "pageLength": 25,
+            "order": [[ 0, "desc" ]]
+        });
+    });
+</script>
+{% endblock %} 

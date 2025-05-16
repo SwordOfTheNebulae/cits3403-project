@@ -1,0 +1,66 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Tags Management - Movie Recommendation Admin{% endblock %}
+
+{% block page_title %}Tags Management{% endblock %}
+
+{% block page_actions %}
+<a href="{{ url_for('admin.tag_create') }}" class="btn btn-sm btn-success">
+    <i class="fa fa-plus"></i> Add New Tag
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">All Tags</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="tagsTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Movies Count</th>
+                        <th>User Preferences</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tag in tags %}
+                    <tr>
+                        <td>{{ tag.id }}</td>
+                        <td>{{ tag.name }}</td>
+                        <td>{{ tag.movies|length }}</td>
+                        <td>{{ tag.tag_prefers.count() }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.tag_edit', id=tag.id) }}" class="btn btn-sm btn-primary">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <form action="{{ url_for('admin.tag_delete', id=tag.id) }}" method="POST" style="display:inline">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete tag {{ tag.name }}? This action cannot be undone.')">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        $('#tagsTable').DataTable({
+            "pageLength": 25,
+            "order": [[ 0, "asc" ]]
+        });
+    });
+</script>
+{% endblock %} 

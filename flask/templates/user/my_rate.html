@@ -1,0 +1,34 @@
+{% extends "user/base_show.html" %}
+{% block personal %}
+<div class="col-lg-9">
+    <div class="video-details">
+        <div class="latest_vidz">
+            <div class="latest-vid-option">
+                <h2 class="hd-op">My Ratings</h2>
+                <div class="clearfix"></div>
+            </div><!--latest-vid-option end-->
+            <div class="vidz_list">
+                <table width="800" border="0" style="table-layout: fixed">
+
+                    <tr align="center">
+                        <td align="center">Movie Name</td>
+                        <td align="center">Rating</td>
+                        <td align="center">Time</td>
+                        <td align="center">Delete</td>
+                    </tr>
+                    {% for i in item %}
+                    <tr align="center">
+                        <td align="center">{{ i.movie.name }}</td>
+                        <td align="center">{{ i.mark }}</td>
+                        <td align="center">{{ i.create_time }}</td>
+                        <td align="center">
+                            <button><a href="{{ url_for('user.delete_rate', rate_id=i.id) }}">Delete</a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div><!--vidz_list end-->
+        </div><!--latest_vidz end-->
+    </div><!--video-details end-->
+</div>
+{% endblock %}

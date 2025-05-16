@@ -1,0 +1,119 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Add New Movie - Movie Recommendation Admin{% endblock %}
+
+{% block page_title %}Add New Movie{% endblock %}
+
+{% block page_actions %}
+<a href="{{ url_for('admin.movies') }}" class="btn btn-sm btn-secondary">
+    <i class="fa fa-arrow-left"></i> Back to Movies
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Movie Information</h6>
+    </div>
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Movie Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="director">Director</label>
+                        <input type="text" class="form-control" id="director" name="director" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" id="country" name="country" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="years">Release Date</label>
+                        <input type="date" class="form-control" id="years" name="years" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="d_rate_nums">Number of Rates (Douban)</label>
+                        <input type="number" class="form-control" id="d_rate_nums" name="d_rate_nums" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="d_rate">Rating (Douban)</label>
+                        <input type="text" class="form-control" id="d_rate" name="d_rate" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="leader">Lead Actors</label>
+                        <input type="text" class="form-control" id="leader" name="leader" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image_file">Movie Poster</label>
+                        <input type="file" class="form-control-file" id="image_file" name="image_file" accept="image/*">
+                        <small class="form-text text-muted">Upload a movie poster image.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="image_link">Movie Poster URL (Alternative)</label>
+                        <input type="text" class="form-control" id="image_link" name="image_link">
+                    </div>
+                    <div class="form-group">
+                        <label for="douban_link">Douban Link</label>
+                        <input type="url" class="form-control" id="douban_link" name="douban_link" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="origin_image_link">Original Image URL (Optional)</label>
+                        <input type="url" class="form-control" id="origin_image_link" name="origin_image_link">
+                    </div>
+                    <div class="form-group">
+                        <label for="imdb_link">IMDB Link (Optional)</label>
+                        <input type="url" class="form-control" id="imdb_link" name="imdb_link">
+                    </div>
+                    <div class="form-group">
+                        <label for="douban_id">Douban ID (Optional)</label>
+                        <input type="text" class="form-control" id="douban_id" name="douban_id">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="intro">Movie Introduction</label>
+                        <textarea class="form-control" id="intro" name="intro" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">Tags</label>
+                        <select multiple class="form-control" id="tags" name="tags">
+                            {% for tag in tags %}
+                                <option value="{{ tag.id }}">{{ tag.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="form-text text-muted">Hold Ctrl (or Cmd on Mac) to select multiple tags.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-save"></i> Save Movie
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#tags').select2({
+            placeholder: 'Select tags',
+            allowClear: true
+        });
+    });
+</script>
+{% endblock %} 

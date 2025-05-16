@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    .tag-choices {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 4px;
+    }
+    .tag-choices ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+    .tag-choices li {
+        margin-bottom: 5px;
+    }
+    .required-field::after {
+        content: " *";
+        color: red;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="vds-main">
+    <div class="vidz-row">
+        <div class="container">
+            <div class="vidz_sec">
+                <h3>Edit Movie</h3>
+                <div class="row">
+                    <div class="col-lg-8">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                        
+                        <form method="post" enctype="multipart/form-data" class="form" id="movieForm">
+                            {{ form.csrf_token }}
+                            
+                            <div class="form-group">
+                                <label for="{{ form.name.id }}" class="required-field">Movie Name:</label>
+                                {{ form.name(class="form-control") }}
+                                {% if form.name.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.director.id }}" class="required-field">Director:</label>
+                                {{ form.director(class="form-control") }}
+                                {% if form.director.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.director.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.country.id }}" class="required-field">Country/Region:</label>
+                                {{ form.country(class="form-control") }}
+                                {% if form.country.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.country.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.years.id }}" class="required-field">Release Date:</label>
+                                {{ form.years(class="form-control", type="date") }}
+                                <small class="form-text text-muted">Format: YYYY-MM-DD</small>
+                                {% if form.years.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.years.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.leader.id }}" class="required-field">Lead Actors:</label>
+                                {{ form.leader(class="form-control") }}
+                                {% if form.leader.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.leader.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.d_rate_nums.id }}" class="required-field">Douban Rating Count:</label>
+                                {{ form.d_rate_nums(class="form-control", type="number") }}
+                                {% if form.d_rate_nums.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.d_rate_nums.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.d_rate.id }}" class="required-field">Douban Rating:</label>
+                                {{ form.d_rate(class="form-control") }}
+                                {% if form.d_rate.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.d_rate.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.intro.id }}" class="required-field">Movie Description:</label>
+                                {{ form.intro(class="form-control") }}
+                                {% if form.intro.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.intro.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.image_link.id }}">Update Cover Image:</label>
+                                {{ form.image_link(class="form-control") }}
+                                <small class="form-text text-muted">Leave empty if you don't want to change the cover image</small>
+                                {% if form.image_link.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.image_link.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                
+                                {% if movie.image_link %}
+                                <div class="mt-2">
+                                    <p>Current Cover:</p>
+                                    <img src="{{ url_for('serve_media', filename=movie.image_link) }}" alt="{{ movie.name }}" style="max-width: 200px;">
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.douban_link.id }}" class="required-field">Douban Link:</label>
+                                {{ form.douban_link(class="form-control") }}
+                                {% if form.douban_link.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.douban_link.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.douban_id.id }}">Douban ID:</label>
+                                {{ form.douban_id(class="form-control") }}
+                                {% if form.douban_id.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.douban_id.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.imdb_link.id }}">IMDB Link:</label>
+                                {{ form.imdb_link(class="form-control") }}
+                                {% if form.imdb_link.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.imdb_link.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Movie Tags:</label>
+                                <div class="tag-choices">
+                                    {{ form.tags }}
+                                </div>
+                                {% if form.tags.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.tags.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.origin_image_link.id }}">Original Image Link:</label>
+                                {{ form.origin_image_link(class="form-control") }}
+                                {% if form.origin_image_link.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.origin_image_link.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                <a href="{{ url_for('user.upload_status', upload_id=upload_id) }}" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

@@ -1,0 +1,63 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Users Management - Movie Recommendation Admin{% endblock %}
+
+{% block page_title %}Users Management{% endblock %}
+
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="usersTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Rates</th>
+                        <th>Comments</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.rates.count() }}</td>
+                        <td>{{ user.comments.count() }}</td>
+                        <td>{{ user.created_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.user_detail', id=user.id) }}" class="btn btn-sm btn-info">
+                                <i class="fa fa-eye"></i> View
+                            </a>
+                            <form action="{{ url_for('admin.user_delete', id=user.id) }}" method="POST" style="display:inline">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete user {{ user.username }}? This action cannot be undone.')">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        $('#usersTable').DataTable({
+            "order": [[ 0, "desc" ]]
+        });
+    });
+</script>
+{% endblock %} 
