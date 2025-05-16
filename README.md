@@ -1,25 +1,26 @@
-# Flask Web Application for [CineRate]
+# Flask Web Application for CineRate
 
 ## Purpose
 
-This project is a web-based movie recommendation system that allows users to:
+CineRate is a web-based movie recommendation system that allows users to:
 
 - Create a personal account
 - Upload their viewing history or rating data (.csv or manual input)
 - Receive **personalized movie recommendations**
 - Visualize their genre preferences and rating trends
-- Share their results with friends for collaborative recommendations
+- Share results with friends for collaborative recommendations
 
 ---
 
 ## Design and Features
 
-- Developed using **Flask** framework.
-- Implements MVC structure with **Jinja2**, **WTForms**, and **SQLAlchemy**.
-- Includes user authentication, session handling, and database persistence.
-- The application supports [e.g., user login, content creation, rating, etc.].
+- Developed using the **Flask** web framework
+- Follows the MVC pattern using **Jinja2**, **WTForms**, and **SQLAlchemy**
+- Implements user authentication, session handling, and persistent storage
+- Core functionalities include user login, movie rating, trend visualization, and sharing
 
 ---
+
 
 ## Group Members
 
@@ -48,7 +49,7 @@ This project is a web-based movie recommendation system that allows users to:
    pip install -r requirements.txt
 4. Run flask
    ```bash
-   flask run # Default running address：http://127.0.0.1:5000/
+   flask run  # Default running address: http://127.0.0.1:5000/
 
 ---
 
@@ -81,7 +82,6 @@ This project is a web-based movie recommendation system that allows users to:
 │   │   ├── images/               
 │   │   └── js/                    
 │   ├── templates/                 # Jinja2 HTML templates 
-│   ├── templates.rar              # Backup template archive 
 │   └── utils/                     # Utility/helper functions 
 ├── media/                         # Uploaded media files 
 │   ├── comment/                   
