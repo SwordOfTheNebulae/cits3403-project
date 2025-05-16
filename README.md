@@ -23,12 +23,12 @@ This project is a web-based movie recommendation system that allows users to:
 
 ## Group Members
 
-| UWA ID   | Name        | GitHub Username |
-|----------|-------------|-----------------|
-| 23371813 | Frank Fu    | FRANKAYFU       |
-| 24084355 | WEIMAN GAO  | WeimanGao       |
-|          |             |                 |
-|          |             |                 |
+| UWA ID   | Name            | GitHub Username   |
+|----------|-----------------|-------------------|
+| 23371813 | Frank Fu        | FRANKAYFU         |
+| 24084355 | WEIMAN GAO      | WeimanGao         |
+| 23831346 | Jasper Chadwick | SwordOfTheNebulae |
+|          |                 |                   |
 
 ---
 
