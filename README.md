@@ -34,19 +34,19 @@ This project is a web-based movie recommendation system that allows users to:
 
 ## How to Launch the Application
 
-1. **Clone the repository:
+1. Clone the repository:
    ```bash
    git clone https://github.com/your-team/project-name.git
    cd project-name
-2. **Create and activate virtual environment:
+2. Create and activate virtual environment:
    ```bash
    python3 -m venv venv
    source venv/bin/activate         # Mac/Linux
    .\venv\Scripts\activate          # Windows
-3. **Install dependencies
+3. Install dependencies
    ```bash
    pip install -r requirements.txt
-4. **Install dependencies
+4. Install dependencies
    ```bash
    flask run # Default running address：http://127.0.0.1:5000/
 
@@ -54,8 +54,8 @@ This project is a web-based movie recommendation system that allows users to:
 
 ## How to Run the Tests
 
-1. **Ensure venv is active
-2. **Run tests
+1. Ensure venv is active
+2. Run tests
    ```bash
    pytest tests/
 
@@ -63,6 +63,7 @@ This project is a web-based movie recommendation system that allows users to:
 
 ## Project Structure
 
+```bash
 .
 ├── app/                           # Main application package 
 │   ├── app.py                     # Flask application script 
@@ -91,6 +92,7 @@ This project is a web-based movie recommendation system that allows users to:
 ├── .flaskenv                      # Flask environment settings 
 ├── requirements.txt               # Python package dependencies 
 └── README.md                      # Project documentation 
+```
 
 ---
 
