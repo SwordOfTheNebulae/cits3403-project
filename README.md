@@ -37,8 +37,8 @@ CineRate is a web-based movie recommendation system that allows users to:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-team/project-name.git
-   cd project-name
+   git clone https://github.com/SwordOfTheNebulae/cits3403-project.git
+   cd cits3403-project
 2. Create and activate virtual environment:
    ```bash
    python3 -m venv venv
