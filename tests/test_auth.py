@@ -3,7 +3,7 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import pytest
-from app.create_app import db, create_app
+from create_app import db, create_app
 
 
 @pytest.fixture
