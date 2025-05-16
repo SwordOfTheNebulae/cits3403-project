@@ -4,8 +4,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import pytest
 from datetime import datetime
-from app.create_app import db, create_app
-from app.models.models import User, Movie, Rate, Comment, Tags, UserTagPrefer
+from create_app import db, create_app
+from models.models import User, Movie, Rate, Comment, Tags, UserTagPrefer
 
 
 @pytest.fixture
