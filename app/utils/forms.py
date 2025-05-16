@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FloatField, DateField, BooleanField, SelectMultipleField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError, URL, Optional
-from app.models.models import User, Tags
+from models.models import User, Tags
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired('Please enter your username')])
@@ -84,6 +84,13 @@ class MovieForm(FlaskForm):
         # 去重处理
         field.data = list(set(field.data))
 
+class MovieEditForm(MovieForm):
+    """Form for editing movies, with optional image upload"""
+    image_link = FileField('Cover Image', validators=[
+        FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Only image files allowed')
+    ])
+    submit = SubmitField('Save Changes')
+
 class SharedRecommendationForm(FlaskForm):
     title = StringField('Share Title', validators=[DataRequired('Please enter a title'), Length(max=255)])
     description = TextAreaField('Description', validators=[Optional(), Length(max=1000)])
@@ -94,7 +101,7 @@ class SharedRecommendationForm(FlaskForm):
     
     def __init__(self, current_user_id, *args, **kwargs):
         super(SharedRecommendationForm, self).__init__(*args, **kwargs)
-        from app.models.models import Movie, User
+        from models.models import Movie, User
         self.movies.choices = [(movie.id, movie.name) for movie in Movie.query.all()]
         self.shared_with.choices = [(user.id, user.username) for user in User.query.filter(User.id != current_user_id).all()]
 
