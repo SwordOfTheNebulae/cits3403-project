@@ -46,7 +46,7 @@ This project is a web-based movie recommendation system that allows users to:
 3. Install dependencies
    ```bash
    pip install -r requirements.txt
-4. Install dependencies
+4. Run flask
    ```bash
    flask run # Default running address：http://127.0.0.1:5000/
 
