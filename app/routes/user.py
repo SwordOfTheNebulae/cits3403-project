@@ -3,7 +3,7 @@ from create_app import db
 from sqlalchemy import func
 from models.models import User, Movie, Rate, Comment, LikeComment, MovieUpload, SharedRecommendation, Tags
 from utils.decorators import login_required
-from utils.forms import EditProfileForm, CommentForm, RateForm, MovieUploadForm, MovieForm, MovieEditForm, SharedRecommendationForm
+from utils.forms import EditProfileForm, CommentForm, RateForm, MovieUploadForm, MovieForm, SharedRecommendationForm
 from utils.file_handlers import allowed_file, save_file, process_csv_file
 import os
 import uuid
@@ -668,94 +668,3 @@ def shared_with_me():
     shares = list(set(shared_with_user + public_shares))
 
     return render_template('user/shared_with_me.html', shares=shares)
-
-@user_bp.route('/edit_imported_movie/<int:movie_id>/<int:upload_id>', methods=['GET', 'POST'])
-@login_required
-def edit_imported_movie(movie_id, upload_id):
-    user_id = session.get('user_id')
-    movie = Movie.query.get_or_404(movie_id)
-    upload = MovieUpload.query.get_or_404(upload_id)
-    
-    # Verify user permission
-    if upload.user_id != user_id:
-        abort(403)
-    
-    form = MovieEditForm(obj=movie)
-    
-    if form.validate_on_submit():
-        try:
-            # Handle image upload
-            if form.image_link.data and hasattr(form.image_link.data, 'filename') and form.image_link.data.filename:
-                # Save new image
-                media_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'media', 'movie_cover')
-                image_filename = save_file(form.image_link.data, media_dir)
-                movie.image_link = image_filename
-            
-            # Update movie data
-            movie.name = form.name.data
-            movie.director = form.director.data
-            movie.country = form.country.data
-            movie.years = form.years.data
-            movie.leader = form.leader.data
-            movie.d_rate_nums = form.d_rate_nums.data
-            movie.d_rate = form.d_rate.data
-            movie.intro = form.intro.data
-            movie.origin_image_link = form.origin_image_link.data
-            movie.imdb_link = form.imdb_link.data
-            movie.douban_link = form.douban_link.data
-            movie.douban_id = form.douban_id.data
-            
-            # Update tags
-            tag_ids = set(form.tags.data)
-            tags = Tags.query.filter(Tags.id.in_(tag_ids)).all()
-            movie.tags = []
-            for tag in tags:
-                movie.tags.append(tag)
-            
-            db.session.commit()
-            flash(f'Movie "{movie.name}" has been updated successfully', 'success')
-            return redirect(url_for('user.upload_status', upload_id=upload_id))
-            
-        except Exception as e:
-            db.session.rollback()
-            import traceback
-            error_details = traceback.format_exc()
-            print(f"Error updating movie: {str(e)}\n{error_details}")
-            flash(f'Failed to update movie: {str(e)}', 'danger')
-    
-    # For GET requests, pre-populate the form
-    elif request.method == 'GET':
-        # Pre-set tags
-        form.tags.data = [tag.id for tag in movie.tags]
-    
-    # Handle form validation errors
-    if form.errors:
-        for field, errors in form.errors.items():
-            for error in errors:
-                flash(f'Error in field {field}: {error}', 'danger')
-    
-    return render_template('user/edit_movie.html', form=form, movie=movie, upload_id=upload_id)
-
-@user_bp.route('/delete_imported_movie/<int:movie_id>/<int:upload_id>')
-@login_required
-def delete_imported_movie(movie_id, upload_id):
-    user_id = session.get('user_id')
-    movie = Movie.query.get_or_404(movie_id)
-    upload = MovieUpload.query.get_or_404(upload_id)
-    
-    # Verify user permission
-    if upload.user_id != user_id:
-        abort(403)
-    
-    try:
-        # Simple direct deletion of the movie
-        db.session.delete(movie)
-        db.session.commit()
-        
-        flash(f'Movie "{movie.name}" has been deleted successfully', 'success')
-    except Exception as e:
-        db.session.rollback()
-        print(f"Error deleting movie: {str(e)}")
-        flash(f'Failed to delete movie: {str(e)}', 'danger')
-    
-    return redirect(url_for('user.upload_status', upload_id=upload_id))
