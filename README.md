@@ -28,7 +28,7 @@ This project is a web-based movie recommendation system that allows users to:
 | 23371813 | Frank Fu        | FRANKAYFU         |
 | 24084355 | WEIMAN GAO      | WeimanGao         |
 | 23831346 | Jasper Chadwick | SwordOfTheNebulae |
-|          |                 |                   |
+| 24214099 | Lucan McDonald  | PiesOnTues        |
 
 ---
 
