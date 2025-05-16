@@ -89,7 +89,6 @@ CineRate is a web-based movie recommendation system that allows users to:
 │   └── movie_uploads/             
 ├── tests/                         # Test scripts and cases 
 ├── .gitignore   
-├── .flaskenv                      # Flask environment settings 
 ├── requirements.txt               # Python package dependencies 
 └── README.md                      # Project documentation 
 ```
