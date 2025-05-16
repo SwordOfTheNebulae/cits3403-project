@@ -84,13 +84,6 @@ class MovieForm(FlaskForm):
         # 去重处理
         field.data = list(set(field.data))
 
-class MovieEditForm(MovieForm):
-    """Form for editing movies, with optional image upload"""
-    image_link = FileField('Cover Image', validators=[
-        FileAllowed(['jpg', 'png', 'jpeg', 'gif'], 'Only image files allowed')
-    ])
-    submit = SubmitField('Save Changes')
-
 class SharedRecommendationForm(FlaskForm):
     title = StringField('Share Title', validators=[DataRequired('Please enter a title'), Length(max=255)])
     description = TextAreaField('Description', validators=[Optional(), Length(max=1000)])
