@@ -67,7 +67,8 @@ CineRate is a web-based movie recommendation system that allows users to:
 ```bash
 .
 ├── flask/                           # Main application package 
-│   ├── app.py                     # Flask application script 
+│   ├── app.py                     # Flask application script
+│   ├── requirements.txt               # Python package dependencies 
 │   ├── config.py                  # Application configuration settings 
 │   ├── create_app.py              # Application factory function
 │   ├── data/                      # Data storage or processing scripts 
@@ -89,7 +90,6 @@ CineRate is a web-based movie recommendation system that allows users to:
 │   └── movie_uploads/
 ├── tests/                         # Test scripts and cases          
 ├── .gitignore   
-├── requirements.txt               # Python package dependencies 
 └── README.md                      # Project documentation 
 ```
 
